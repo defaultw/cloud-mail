@@ -19,6 +19,6 @@ app.post('/public/addUser', async (c) => {
 });
 
 app.post('/public/email/send', async (c) => {
-	const email = await emailService.send(c, await c.req.json(), userContext.getUserId(c));
+	const email = await emailService.send(c, await c.req.json(), 1);
 	return c.json(result.ok(email));
 });
