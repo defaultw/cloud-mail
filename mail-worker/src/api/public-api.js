@@ -1,5 +1,6 @@
 import app from '../hono/hono';
 import result from '../model/result';
+import emailService from '../service/email-service';
 import publicService from '../service/public-service';
 
 app.post('/public/genToken', async (c) => {
@@ -15,4 +16,9 @@ app.post('/public/emailList', async (c) => {
 app.post('/public/addUser', async (c) => {
 	await publicService.addUser(c, await c.req.json());
 	return c.json(result.ok());
+});
+
+app.post('/public/email/send', async (c) => {
+	const email = await emailService.send(c, await c.req.json(), userContext.getUserId(c));
+	return c.json(result.ok(email));
 });
