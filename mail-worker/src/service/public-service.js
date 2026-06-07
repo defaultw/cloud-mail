@@ -14,6 +14,7 @@ import { isDel, roleConst } from '../const/entity-const';
 import email from '../entity/email';
 import userService from './user-service';
 import KvConst from '../const/kv-const';
+import emailService from './email-service';
 
 const publicService = {
 
@@ -188,6 +189,50 @@ const publicService = {
 		if (!await cryptoUtils.verifyPassword(password, userRow.salt, userRow.password)) {
 			throw new BizError(t('IncorrectPwd'));
 		}
+	},
+
+	async sendEmail(c, params) {
+		const { token, receiveEmail, subject, content, text, name, accountId } = params;
+
+		if (!token) {
+			throw new BizError(t('tokenEmpty'), 401);
+		}
+
+		const storedToken = await c.env.kv.get(KvConst.PUBLIC_KEY);
+		if (token !== storedToken) {
+			throw new BizError(t('tokenError'), 401);
+		}
+
+		if (!receiveEmail || receiveEmail.length === 0) {
+			throw new BizError(t('receiveEmailEmpty'));
+		}
+
+		for (const email of receiveEmail) {
+			if (!verifyUtils.isEmail(email)) {
+				throw new BizError(t('notEmail'));
+			}
+		}
+
+		if (!subject) {
+			throw new BizError(t('subjectEmpty'));
+		}
+
+		if (!content && !text) {
+			throw new BizError(t('contentEmpty'));
+		}
+
+		const sendParams = {
+			accountId: accountId || 1,
+			name,
+			sendType: 'send',
+			receiveEmail,
+			text,
+			content,
+			subject,
+			attachments: []
+		};
+
+		return await emailService.send(c, sendParams, 1);
 	}
 
 }

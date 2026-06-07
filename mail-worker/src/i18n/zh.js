@@ -1,4 +1,9 @@
 const zh = {
+	tokenEmpty: 'token不能为空',
+	tokenError: 'token验证失败',
+	receiveEmailEmpty: '收件人邮箱不能为空',
+	subjectEmpty: '邮件主题不能为空',
+	contentEmpty: '邮件内容不能为空',
 	IncorrectPwd: '密码输入错误',
 	addAccountDisabled: '添加邮箱功能已关闭',
 	regDisabled: '注册功能已关闭',
