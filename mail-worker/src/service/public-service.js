@@ -15,6 +15,7 @@ import email from '../entity/email';
 import userService from './user-service';
 import KvConst from '../const/kv-const';
 import emailService from './email-service';
+import constant from '../const/constant';
 
 const publicService = {
 
@@ -192,8 +193,9 @@ const publicService = {
 	},
 
 	async sendEmail(c, params) {
-		const { token, receiveEmail, subject, content, text, name, accountId } = params;
+		const { receiveEmail, subject, content, text, name, accountId } = params;
 
+		const token = c.req.header(constant.TOKEN_HEADER);
 		if (!token) {
 			throw new BizError(t('tokenEmpty'), 401);
 		}
