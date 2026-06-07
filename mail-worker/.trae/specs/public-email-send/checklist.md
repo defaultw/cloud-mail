@@ -1,0 +1,6 @@
+- [x] Checkpoint 1: public-service.js 中已添加 sendEmail 方法
+- [x] Checkpoint 2: sendEmail 方法包含参数校验逻辑
+- [x] Checkpoint 3: sendEmail 方法正确调用 emailService.send
+- [x] Checkpoint 4: public-api.js 路由已更新为调用 publicService.sendEmail
+- [x] Checkpoint 5: API 响应格式统一
+- [x] Checkpoint 6: 认证 token 校验已实现
